@@ -1,0 +1,8 @@
+{
+  "name": "devlab",
+  "private": true,
+  "version": "1.0.0",
+  "scripts": {
+    "dashboard": "pnpm --dir dashboard dev"
+  }
+}
