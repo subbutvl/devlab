@@ -1,1 +1,36 @@
-[]
+[
+  {
+    "id": "health-journal",
+    "title": "health-journal",
+    "description": "Imported project",
+    "stack": [
+      "React"
+    ],
+    "framework": "React",
+    "packageManager": "npm",
+    "runScript": "dev",
+    "status": "active",
+    "category": "react",
+    "favorite": false,
+    "createdAt": "2026-05-10T13:06:32.420Z",
+    "lastOpened": "Never",
+    "path": "C:\\Users\\subbu\\Desktop\\health-journal"
+  },
+  {
+    "id": "mui-getting-started",
+    "title": "mui-getting-started",
+    "description": "Imported project",
+    "stack": [
+      "React"
+    ],
+    "framework": "React",
+    "packageManager": "npm",
+    "runScript": "dev",
+    "status": "active",
+    "category": "react",
+    "favorite": false,
+    "createdAt": "2026-05-10T13:34:03.116Z",
+    "lastOpened": "Never",
+    "path": "C:\\Users\\subbu\\Desktop\\mui-getting-started"
+  }
+]

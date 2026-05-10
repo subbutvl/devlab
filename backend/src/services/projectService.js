@@ -15,6 +15,12 @@ export function saveProjects(projects) {
   fs.writeFileSync(registryPath, JSON.stringify(projects, null, 2));
 }
 
+export function getProjectById(id) {
+  const projects = getAllProjects();
+
+  return projects.find((project) => project.id === id);
+}
+
 export function importProjectFromPath(projectPath) {
   const projects = getAllProjects();
 
@@ -22,14 +28,32 @@ export function importProjectFromPath(projectPath) {
 
   const frameworkInfo = detectFramework(projectPath);
 
+  // let defaultPort = 5173;
+
+  // if (frameworkInfo.framework === "Angular") {
+  //   defaultPort = 4200;
+  // }
+
+  // if (frameworkInfo.framework === "Python") {
+  //   defaultPort = 8000;
+  // }
+
   const project = {
-    id: folderName.toLowerCase(),
+    id: folderName.toLowerCase().replaceAll(" ", "-"),
 
     title: folderName,
 
     description: "Imported project",
 
     stack: [frameworkInfo.framework],
+
+    framework: frameworkInfo.framework,
+
+    // runCommand: frameworkInfo.runCommand,
+
+    packageManager: frameworkInfo.packageManager,
+
+    runScript: frameworkInfo.runScript,
 
     status: "active",
 
@@ -42,6 +66,8 @@ export function importProjectFromPath(projectPath) {
     lastOpened: "Never",
 
     path: projectPath,
+
+    // port: defaultPort,
   };
 
   projects.push(project);
@@ -49,4 +75,16 @@ export function importProjectFromPath(projectPath) {
   saveProjects(projects);
 
   return project;
+}
+
+export function removeProjectById(id) {
+  const projects = getAllProjects();
+
+  const filteredProjects = projects.filter((project) => project.id !== id);
+
+  saveProjects(filteredProjects);
+
+  return {
+    success: true,
+  };
 }

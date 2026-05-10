@@ -2,33 +2,59 @@ import { useEffect, useState } from 'react'
 
 import ProjectCard from '../../components/cards/ProjectCard'
 
-import { getAllProjects } from '../../services/projectService'
+import {
+  getAllProjects,
+  getRuntimeStatuses,
+} from '../../services/projectService'
 
 function DashboardPage() {
-  const [projects, setProjects] = useState([])
+  const [projects, setProjects] =
+    useState([])
 
-  useEffect(() => {
-    async function loadProjects() {
-      const data = await getAllProjects()
+  const [runtimeStatuses,
+    setRuntimeStatuses] = useState({})
 
-      setProjects(data)
-    }
+useEffect(() => {
+  async function initialize() {
+    const projectsData =
+      await getAllProjects()
 
-    loadProjects()
-  }, [])
+    setProjects(projectsData)
+
+    const runtimeData =
+      await getRuntimeStatuses()
+
+    setRuntimeStatuses(runtimeData)
+  }
+
+  initialize()
+
+  const interval = setInterval(async () => {
+    const runtimeData =
+      await getRuntimeStatuses()
+
+    setRuntimeStatuses(runtimeData)
+  }, 3000)
+
+  return () => {
+    clearInterval(interval)
+  }
+}, [])
 
   const activeProjects = projects.filter(
     (project) => project.status === 'active'
   )
 
-  const archivedProjects = projects.filter(
-    (project) =>
-      project.status === 'archived'
-  )
+  const archivedProjects =
+    projects.filter(
+      (project) =>
+        project.status === 'archived'
+    )
 
-  const favoriteProjects = projects.filter(
-    (project) => project.favorite
-  )
+  const favoriteProjects =
+    projects.filter(
+      (project) => project.favorite
+    )
 
   return (
     <div>
@@ -96,6 +122,17 @@ function DashboardPage() {
             <ProjectCard
               key={project.id}
               project={project}
+              runtimeStatus={
+                runtimeStatuses[
+                  project.id
+                ]?.status
+              }
+
+              runtimeUrl={
+                runtimeStatuses[
+                  project.id
+                ]?.url
+              }
             />
           ))}
         </div>

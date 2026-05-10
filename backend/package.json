@@ -8,7 +8,9 @@
   },
   "dependencies": {
     "cors": "^2.8.5",
-    "express": "^5.1.0"
+    "express": "^5.1.0",
+    "kill-port": "^2.0.1",
+    "open": "^11.0.0"
   },
   "devDependencies": {
     "nodemon": "^3.1.10"

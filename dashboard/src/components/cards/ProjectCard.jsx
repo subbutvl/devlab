@@ -2,24 +2,60 @@ import {
   FolderKanban,
   Star,
   Play,
+  Copy,
   ExternalLink,
 } from 'lucide-react'
 
-import StatusBadge from '../badges/StatusBadge'
+import {
+  runProject,
+} from '../../services/projectService'
+
 import StackBadge from '../badges/StackBadge'
 
-function ProjectCard({ project }) {
+import RuntimeStatusDot from '../badges/RuntimeStatusDot'
+
+import ProjectCardMenu from './ProjectCardMenu'
+
+// import RuntimeUrlBadge from '../badges/RuntimeUrlBadge'
+
+function ProjectCard({
+  project,
+  runtimeStatus,
+  runtimeUrl,
+  onRemoved,
+}) {
+  async function handleRun() {
+    await runProject(project.id)
+  }
+
+  async function handleCopy() {
+  if (!runtimeUrl) return
+
+  await navigator.clipboard.writeText(
+    runtimeUrl
+  )
+}
+
+function handleOpen() {
+  if (!runtimeUrl) return
+
+  window.open(
+    runtimeUrl,
+    '_blank'
+  )
+}
+
   return (
     <div
       className="
-        group rounded-lg border border-neutral-200
+        group rounded-2xl border border-neutral-200
         bg-white p-5 transition-all
         hover:border-neutral-300
         hover:shadow-sm
       "
     >
       <div className="flex items-start justify-between">
-        <div className="flex items-center gap-3">
+        <div className="flex items-start gap-3">
           <div
             className="
               flex h-11 w-11 items-center justify-center
@@ -30,32 +66,58 @@ function ProjectCard({ project }) {
           </div>
 
           <div>
-            <div className="flex items-center gap-3">
-                <h3 className="font-semibold tracking-tight">
+            <div className="flex items-center gap-2">
+              <h3 className="font-semibold tracking-tight">
                 {project.title}
-                </h3>
+              </h3>
 
-                <StatusBadge className="ms-auto" status={project.status} />
+              {project.favorite && (
+                <Star
+                  size={14}
+                  className="fill-black text-black"
+                />
+              )}
             </div>
 
-            <div className="flex items-center gap-3">
-                <p className="text-sm text-neutral-700">
-                    {project.category}
-                </p>
+            <div
+              className="
+                mt-2 flex items-center gap-3
+              "
+            >
+              <div className="flex items-center gap-2">
+                <RuntimeStatusDot
+                  status={runtimeStatus}
+                />
 
-                <div className="text-sm text-neutral-300">
-                    {project.lastOpened}
-                </div>
+                <p className="text-xs text-neutral-500 capitalize">
+                  {runtimeStatus ||
+                    'stopped'}
+                </p>
+              </div>
+
+              <p className="text-xs text-neutral-400">
+                •
+              </p>
+
+              <p className="text-xs text-neutral-500">
+                {project.category}
+              </p>
+
+              <p className="text-xs text-neutral-400">
+                •
+              </p>
+
+              <p className="text-xs text-neutral-500">
+                {project.lastOpened}
+              </p>
             </div>
           </div>
         </div>
 
-        {project.favorite && (
-          <Star
-            size={16}
-            className="fill-black text-black"
-          />
-        )}
+        <ProjectCardMenu
+          project={project}
+          onRemoved={onRemoved}
+        />
       </div>
 
       <p className="mt-4 line-clamp-3 text-sm text-neutral-600">
@@ -70,40 +132,100 @@ function ProjectCard({ project }) {
           />
         ))}
       </div>
+      {/* <RuntimeUrlBadge
+        runtimeStatus={runtimeStatus}
+        runtimeUrl={runtimeUrl}
+      /> */}
+      {/* <button
+        onClick={handleRun}
+        className="
+          mt-5 flex w-full items-center
+          justify-center gap-2 rounded-lg
+          bg-black px-4 py-2.5
+          text-sm font-medium text-white
+          transition-all hover:opacity-90
+        "
+      >
+        <Play size={16} />
 
-      {/* <div className="mt-5 flex items-center justify-between">
-        <StatusBadge status={project.status} />
+        Run Project
+      </button> */}
 
-        <div className="text-xs text-neutral-500">
-          {project.lastOpened}
-        </div>
-      </div> */}
 
-      <div className="mt-5 flex items-center gap-2">
-        <button
-          className="
-            flex flex-1 items-center justify-center gap-2
-            rounded-lg bg-black px-4 py-2.5
-            text-sm font-medium text-white
-            transition-all hover:opacity-90
-          "
-        >
-          <Play size={16} />
+<div
+  className="
+    mt-5 flex items-center gap-2
+  "
+>
+  <button
+    onClick={handleRun}
+    className="
+      flex flex-1 items-center
+      justify-center gap-2 rounded-lg
+      bg-black px-4 py-2.5
+      text-sm font-medium text-white
+      transition-all hover:opacity-90
+    "
+  >
+    <Play size={16} />
 
-          Run
-        </button>
+    Run
+  </button>
 
-        <button
-          className="
-            flex items-center justify-center
-            rounded-lg border border-neutral-200
-            px-4 py-2.5 transition-all
-            hover:bg-neutral-100
-          "
-        >
-          <ExternalLink size={16} />
-        </button>
-      </div>
+  <div
+    className="
+      flex h-11 min-w-[76px]
+      items-center justify-center
+      rounded-lg border
+      border-neutral-200
+      bg-neutral-50 px-3
+      text-sm font-medium
+      text-neutral-700
+    "
+  >
+    {runtimeUrl
+      ? runtimeUrl.split(':')[2]?.replace(
+          '/',
+          ''
+        )
+      : '--'}
+  </div>
+
+  <button
+    onClick={handleCopy}
+    disabled={!runtimeUrl}
+    className={`
+      flex h-11 w-11 items-center
+      justify-center rounded-lg border
+      transition-all
+      ${
+        runtimeUrl
+          ? 'border-neutral-200 hover:bg-neutral-100'
+          : 'cursor-not-allowed border-neutral-100 text-neutral-300'
+      }
+    `}
+  >
+    <Copy size={16} />
+  </button>
+
+  <button
+    onClick={handleOpen}
+    disabled={!runtimeUrl}
+    className={`
+      flex h-11 w-11 items-center
+      justify-center rounded-lg border
+      transition-all
+      ${
+        runtimeUrl
+          ? 'border-neutral-200 hover:bg-neutral-100'
+          : 'cursor-not-allowed border-neutral-100 text-neutral-300'
+      }
+    `}
+  >
+    <ExternalLink size={16} />
+  </button>
+</div>
+
     </div>
   )
 }
