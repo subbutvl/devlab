@@ -1,20 +1,34 @@
+import { useEffect, useState } from 'react'
+
 import ProjectCard from '../../components/cards/ProjectCard'
 
-import {
-  getAllProjects,
-  getActiveProjects,
-  getArchivedProjects,
-  getFavoriteProjects,
-} from '../../services/projectService'
+import { getAllProjects } from '../../services/projectService'
 
 function DashboardPage() {
-  const projects = getAllProjects()
+  const [projects, setProjects] = useState([])
 
-  const activeProjects = getActiveProjects()
+  useEffect(() => {
+    async function loadProjects() {
+      const data = await getAllProjects()
 
-  const archivedProjects = getArchivedProjects()
+      setProjects(data)
+    }
 
-  const favoriteProjects = getFavoriteProjects()
+    loadProjects()
+  }, [])
+
+  const activeProjects = projects.filter(
+    (project) => project.status === 'active'
+  )
+
+  const archivedProjects = projects.filter(
+    (project) =>
+      project.status === 'archived'
+  )
+
+  const favoriteProjects = projects.filter(
+    (project) => project.favorite
+  )
 
   return (
     <div>
@@ -71,16 +85,10 @@ function DashboardPage() {
       </div>
 
       <section className="mt-10">
-        <div className="mb-5 flex items-center justify-between">
-          <div>
-            <h2 className="text-lg font-semibold">
-              Recent Projects
-            </h2>
-
-            <p className="mt-1 text-sm text-neutral-500">
-              Continue working on recent experiments.
-            </p>
-          </div>
+        <div className="mb-5">
+          <h2 className="text-lg font-semibold">
+            Recent Projects
+          </h2>
         </div>
 
         <div className="grid grid-cols-3 gap-5">

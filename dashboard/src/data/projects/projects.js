@@ -1,97 +1,97 @@
-export const projects = [
-  {
-    id: "ai-chat-ui",
-    title: "AI Chat UI",
-    description:
-      "Streaming chat interface experiment with markdown rendering and prompt playground.",
+// export const projects = [
+//   {
+//     id: "ai-chat-ui",
+//     title: "AI Chat UI",
+//     description:
+//       "Streaming chat interface experiment with markdown rendering and prompt playground.",
 
-    stack: ["React", "Tailwind", "Vite"],
+//     stack: ["React", "Tailwind", "Vite"],
 
-    status: "active",
+//     status: "active",
 
-    category: "AI",
+//     category: "AI",
 
-    favorite: true,
+//     favorite: true,
 
-    createdAt: "2026-05-01",
+//     createdAt: "2026-05-01",
 
-    lastOpened: "2 hours ago",
+//     lastOpened: "2 hours ago",
 
-    path: "apps/react/ai-chat-ui",
+//     path: "apps/react/ai-chat-ui",
 
-    port: 5174,
-  },
+//     port: 5174,
+//   },
 
-  {
-    id: "angular-admin",
-    title: "Angular Admin Panel",
+//   {
+//     id: "angular-admin",
+//     title: "Angular Admin Panel",
 
-    description:
-      "Enterprise admin dashboard experiment with modular architecture.",
+//     description:
+//       "Enterprise admin dashboard experiment with modular architecture.",
 
-    stack: ["Angular", "TypeScript"],
+//     stack: ["Angular", "TypeScript"],
 
-    status: "paused",
+//     status: "paused",
 
-    category: "Dashboard",
+//     category: "Dashboard",
 
-    favorite: false,
+//     favorite: false,
 
-    createdAt: "2026-04-18",
+//     createdAt: "2026-04-18",
 
-    lastOpened: "Yesterday",
+//     lastOpened: "Yesterday",
 
-    path: "apps/angular/angular-admin",
+//     path: "apps/angular/angular-admin",
 
-    port: 4200,
-  },
+//     port: 4200,
+//   },
 
-  {
-    id: "kanban-vue",
-    title: "Vue Kanban Board",
+//   {
+//     id: "kanban-vue",
+//     title: "Vue Kanban Board",
 
-    description:
-      "Task management board inspired by Trello and Linear workflows.",
+//     description:
+//       "Task management board inspired by Trello and Linear workflows.",
 
-    stack: ["Vue", "Pinia", "Tailwind"],
+//     stack: ["Vue", "Pinia", "Tailwind"],
 
-    status: "active",
+//     status: "active",
 
-    category: "Productivity",
+//     category: "Productivity",
 
-    favorite: true,
+//     favorite: true,
 
-    createdAt: "2026-03-28",
+//     createdAt: "2026-03-28",
 
-    lastOpened: "5 days ago",
+//     lastOpened: "5 days ago",
 
-    path: "apps/vue/kanban-vue",
+//     path: "apps/vue/kanban-vue",
 
-    port: 5175,
-  },
+//     port: 5175,
+//   },
 
-  {
-    id: "python-ai-tools",
+//   {
+//     id: "python-ai-tools",
 
-    title: "Python AI Tools",
+//     title: "Python AI Tools",
 
-    description:
-      "Collection of automation and AI scripting experiments using Python.",
+//     description:
+//       "Collection of automation and AI scripting experiments using Python.",
 
-    stack: ["Python", "FastAPI"],
+//     stack: ["Python", "FastAPI"],
 
-    status: "archived",
+//     status: "archived",
 
-    category: "Automation",
+//     category: "Automation",
 
-    favorite: false,
+//     favorite: false,
 
-    createdAt: "2026-01-10",
+//     createdAt: "2026-01-10",
 
-    lastOpened: "3 weeks ago",
+//     lastOpened: "3 weeks ago",
 
-    path: "apps/python/python-ai-tools",
+//     path: "apps/python/python-ai-tools",
 
-    port: 8000,
-  },
-];
+//     port: 8000,
+//   },
+// ];

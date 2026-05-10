@@ -1,17 +1,25 @@
-import { projects } from "../data/projects/projects";
+// import { projects } from "../data/projects/projects";
 
-export function getAllProjects() {
-  return projects;
+const API_URL = "http://localhost:4000/api/projects";
+
+export async function getAllProjects() {
+  const response = await fetch(API_URL);
+
+  return response.json();
 }
 
-export function getFavoriteProjects() {
-  return projects.filter((project) => project.favorite);
-}
+export async function importProject(projectPath) {
+  const response = await fetch(`${API_URL}/import`, {
+    method: "POST",
 
-export function getActiveProjects() {
-  return projects.filter((project) => project.status === "active");
-}
+    headers: {
+      "Content-Type": "application/json",
+    },
 
-export function getArchivedProjects() {
-  return projects.filter((project) => project.status === "archived");
+    body: JSON.stringify({
+      projectPath,
+    }),
+  });
+
+  return response.json();
 }

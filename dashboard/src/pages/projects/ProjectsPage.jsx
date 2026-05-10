@@ -1,9 +1,21 @@
+import { useEffect, useState } from 'react'
+
 import ProjectCard from '../../components/cards/ProjectCard'
 
 import { getAllProjects } from '../../services/projectService'
 
 function ProjectsPage() {
-  const projects = getAllProjects()
+  const [projects, setProjects] = useState([])
+
+  useEffect(() => {
+    async function loadProjects() {
+      const data = await getAllProjects()
+
+      setProjects(data)
+    }
+
+    loadProjects()
+  }, [])
 
   return (
     <div>
